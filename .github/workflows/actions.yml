@@ -12,10 +12,12 @@ jobs:
         node-version: [10.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: Build the Docker image AND run tests
       run: |
         cd ./client
         docker build -f Dockerfile -t test_image .
+        docker run -e CI=true test_image npm test
+      #-- --coverage
 #      run: docker build -f ./client/Dockerfile -t test_image:$(date +%s) .
 #    - name: Use Node.js ${{ matrix.node-version }}
 #      uses: actions/setup-node@v1
