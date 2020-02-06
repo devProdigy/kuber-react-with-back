@@ -28,65 +28,41 @@ jobs:
 #        docker run test_image npm test -- --coverage
       #-e CI=true
     - name: build images AND push to hub
+#      if: github.ref == 'refs/heads/master'
       run: |
         echo ${DOCKER_PASSWORD} | docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} --password-stdin
 
-        echo "building 'client image'"
-        cd ./client
-        docker build -f Dockerfile -t ${DOCKER_USERNAME}/client:${TAG} .
-        docker push ${DOCKER_USERNAME}/client:${TAG}
+        echo "building '${CLIENT_IMAGE} image'"
+        cd ./${CLIENT_IMAGE}
+        docker build -f Dockerfile -t ${DOCKER_USERNAME}/${CLIENT_IMAGE}:${TAG} .
+        docker push ${DOCKER_USERNAME}/${CLIENT_IMAGE}:${TAG}
         cd ..
-        pwd
+
+        echo "building '${SERVER_IMAGE} image'"
+        cd ./${SERVER_IMAGE}
+        docker build -f Dockerfile -t ${DOCKER_USERNAME}/${SERVER_IMAGE}:${TAG} .
+        docker push ${DOCKER_USERNAME}/${SERVER_IMAGE}:${TAG}
+        cd ..
+
+        echo "building '${NGINX_IMAGE} image'"
+        cd ./${NGINX_IMAGE}
+        docker build -f Dockerfile -t ${DOCKER_USERNAME}/${NGINX_IMAGE}:${TAG} .
+        docker push ${DOCKER_USERNAME}/${NGINX_IMAGE}:${TAG}
+        cd ..
+
+        echo "building '${WORKER_IMAGE} image'"
+        cd ./${WORKER_IMAGE}
+        docker build -f Dockerfile -t ${DOCKER_USERNAME}/${WORKER_IMAGE}:${TAG} .
+        docker push ${DOCKER_USERNAME}/${WORKER_IMAGE}:${TAG}
+        cd ..
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_ID }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_AUTH }}
         DOCKER_REGISTRY: docker.io #registry.hub.docker.com
         TAG: latest
-#    - name: Publish to Registry
-#        uses: HurricanKai/Publish-Docker-Github-Action@master
-#        with:
-#          name: ${{ secrets.DOCKER_ID }}/client
-#          username: ${{ secrets.DOCKER_ID }}
-#          password: ${{ secrets.DOCKER_AUTH }}
-#          registry: registry.hub.docker.com\
-#          tagging: true
-#          dockerfile: MyDockerFileName
-
-#    - name: Login to GitHub Docker Registry
-#        run: docker login docker.pkg.github.com --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-#        env:
-#          DOCKER_USERNAME: ${{ secrets.GITHUB_DOCKER_USERNAME }}
-#          DOCKER_PASSWORD: ${{ secrets.GITHUB_DOCKER_PASSWORD }}
-#    - name: Push to dockerhub
-#      uses: actions/docker/login@master
-#      env:
-#        DOCKER_REGISTRY_URL: registry.hub.docker.com
-#        DOCKER_USERNAME: ${{ secrets.DOCKER_ID }}
-#        DOCKER_PASSWORD: ${{ secrets.DOCKER_AUTH }}
-#      if: github.ref == 'refs/heads/master'
-#      run: |
-#        docker push  docker.pkg.github.com/repoowner/repo_name/image_name:tag
-
-
-      #        docker login docker.pkg.github.com --username "${DOCKER_ID}" --password "${DOCKER_AUTH}"
+        CLIENT_IMAGE: client
+        SERVER_IMAGE: server
+        NGINX_IMAGE: nginx
+        WORKER_IMAGE: worker
     - name: Check
       run: echo "Check health"
-
-
-# =========
-#sudo: required
-#language: generic # ?
-#services:
-#  - docker
-#
-#before_install:
-#  - docker build -t IMAGE -f ./client/Dockerfile.dev .
-#
-#script:
-#  - docker run -e CI=true IMAGE npm test
-#
-#after_success:
-#  - docker build -t ___ ./client
-#  - docker build -t ___ ./nginx
-#  - docker build -t ___ ./server
-#  - docker build -t ___ ./worker
