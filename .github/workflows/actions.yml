@@ -13,7 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build -f ./client/Dockerfile -t test_image .
+      run: |
+        cd ./client
+        docker build -f Dockerfile -t test_image .
 #      run: docker build -f ./client/Dockerfile -t test_image:$(date +%s) .
 #    - name: Use Node.js ${{ matrix.node-version }}
 #      uses: actions/setup-node@v1

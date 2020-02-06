@@ -1,18 +1,11 @@
 FROM node:alpine as builder
-
-RUN ls
-
 WORKDIR '/app'
-
-RUN ls
-
-#COPY ./package.json ./
-COPY package.json .
+COPY ./package.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-RUN true
+#RUN true
 
 FROM nginx:latest
 EXPOSE 3000
