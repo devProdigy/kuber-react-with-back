@@ -1,0 +1,49 @@
+name: MasterDeployCI
+on:
+  push:
+    branches:
+      - feature
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build -t IMAGE:$(date +%s) -f ./client/Dockerfile.dev .
+#    - name: Use Node.js ${{ matrix.node-version }}
+#      uses: actions/setup-node@v1
+#      with:
+#        node-version: ${{ matrix.node-version }}
+#    - name: Install Packages
+#      run: npm install
+#    - name: Deploy to GH Pages
+#      run: |
+#        git config --global user.email "your_github_email>"
+#        git config --global user.name "your_github_username>"
+#        git remote set-url origin https://your_personal_access_token>@github.com/your_github_username>/your_repo>.git
+#        npm run deploy
+    - name: Check
+      run: echo "Check health"
+
+
+# =========
+#sudo: required
+#language: generic # ?
+#services:
+#  - docker
+#
+#before_install:
+#  - docker build -t IMAGE -f ./client/Dockerfile.dev .
+#
+#script:
+#  - docker run -e CI=true IMAGE npm test
+#
+#after_success:
+#  - docker build -t ___ ./client
+#  - docker build -t ___ ./nginx
+#  - docker build -t ___ ./server
+#  - docker build -t ___ ./worker
