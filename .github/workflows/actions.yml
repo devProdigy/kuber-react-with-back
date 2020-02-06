@@ -27,21 +27,20 @@ jobs:
 #        docker build -f Dockerfile.dev -t test_image .
 #        docker run test_image npm test -- --coverage
       #-e CI=true
-    - name: Push
+    - name: build images AND push to hub
       run: |
-        echo "${DOCKER_PASSWORD}" | docker login "${DOCKER_REGISTRY}" -u "${DOCKER_USERNAME}" --password-stdin
+        echo ${DOCKER_PASSWORD} | docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} --password-stdin
 
         echo "building 'client image'"
         cd ./client
-        docker build -f Dockerfile.dev -t ${DOCKER_USERNAME}/client .
-        cd ..
+        docker build -f Dockerfile -t ${DOCKER_USERNAME}/client:${TAG} .
         docker push ${DOCKER_USERNAME}/client:${TAG}
         cd ..
         pwd
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_ID }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_AUTH }}
-        DOCKER_REGISTRY: registry.hub.docker.com
+        DOCKER_REGISTRY: docker.io #registry.hub.docker.com
         TAG: latest
 #    - name: Publish to Registry
 #        uses: HurricanKai/Publish-Docker-Github-Action@master
