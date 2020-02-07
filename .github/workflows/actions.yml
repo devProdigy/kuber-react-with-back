@@ -102,7 +102,7 @@ jobs:
         region: us-east-2
         application_name: kuber-react-multi-cont
         environment_name: KuberReactMultiCont-env
-        version_label: $BUILD_NUMBER
+        version_label: ${BUILD_NUMBER}
         deployment_package: Dockerrun.aws.json
         use_existing_version_if_available: false
 
