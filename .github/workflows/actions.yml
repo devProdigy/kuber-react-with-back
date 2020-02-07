@@ -11,16 +11,19 @@ on:
     branches:
       - feature
       - master
-env:
-  DOCKER_CLI_EXPERIMENTAL: enabled
+#env:
+#  DOCKER_CLI_EXPERIMENTAL: enabled
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
+#    strategy:
+#      matrix:
+#        node-version: [10.x]
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
 
     - name: Build the Docker image AND run tests
       run: |
@@ -29,8 +32,7 @@ jobs:
         docker run test_image npm test -- --coverage
       -e CI=true
 
-    - name: build images AND push to hub
-      #if: github.ref == 'refs/heads/master'
+    - name: build images AND push to hub  #if: github.ref == 'refs/heads/master'
       run: |
         echo ${DOCKER_PASSWORD} | docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} --password-stdin
 
