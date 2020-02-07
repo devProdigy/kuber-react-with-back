@@ -94,8 +94,9 @@ jobs:
         region: us-east-2
         application_name: kuber-react-multi-cont
         environment_name: KuberReactMultiCont-env
-        version_label: 1
+        version_label: 2
         deployment_package: Dockerrun.aws.json
+        use_existing_version_if_available: true
 
 #    - name: Deploy Amazon ECS task definition
 #      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
