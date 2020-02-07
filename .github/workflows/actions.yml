@@ -94,7 +94,7 @@ jobs:
         region: us-east-2
         application_name: kuber-react-multi-cont
         environment_name: KuberReactMultiCont-env
-        version_label: 3
+        version_label: 4
         deployment_package: Dockerrun.aws.json
         use_existing_version_if_available: false
 
@@ -129,9 +129,5 @@ jobs:
 #              region: us-west-2
 #              deployment_package: deploy.zip
 
-#deploy:
-#  edge: true
-#        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-#        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
     - name: Check
       run: echo "Check health"
