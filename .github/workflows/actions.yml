@@ -11,8 +11,8 @@ on:
     branches:
       - feature
       - master
-#env:
-#  DOCKER_CLI_EXPERIMENTAL: enabled
+env:
+  DOCKER_CLI_EXPERIMENTAL: enabled
 jobs:
   build:
     runs-on: ubuntu-latest
