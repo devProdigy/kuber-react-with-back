@@ -65,16 +65,19 @@ jobs:
 #        NGINX_IMAGE: nginx
 #        WORKER_IMAGE: worker
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-        aws-region: us-east-2
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+
+#    - name: Configure AWS credentials
+#      uses: aws-actions/configure-aws-credentials@v1
+#      with:
+#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+#        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+#        aws-region: us-east-2
+#    - name: Login to Amazon ECR
+#      id: login-ecr
+#      uses: aws-actions/amazon-ecr-login@v1
+
+
 
 #    - name: Fill in the new image ID in the Amazon ECS task definition
 #      id: task-def
@@ -91,8 +94,8 @@ jobs:
         region: us-east-2
         application_name: kuber-react-multi-cont
         environment_name: KuberReactMultiCont-env
-        version_label: 12345
-#        deployment_package: deploy.zip
+        version_label: 1
+        deployment_package: Dockerrun.aws.json
 
 #    - name: Deploy Amazon ECS task definition
 #      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
