@@ -1,6 +1,6 @@
 {
-  "AWSEBDockerrunVersion": 2,
-  "ContainerDefinition": [
+  "family": "awseb-KuberReactMultiCont-env-qgxxvqtykr",
+  "containerDefinitions": [
     {
       "name": "client",
       "image": "devprodigy/client",
