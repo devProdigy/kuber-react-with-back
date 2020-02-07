@@ -83,15 +83,26 @@ jobs:
 #        task-definition: Dockerrun.aws.json
 #        container-name: kuber-react-multi-cont
 #        image: ${{ steps.build-image.outputs.image }}
-
-    - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v5
       with:
-#        task-definition: ${{ steps.task-def.outputs.task-definition }}
-        task-definition: Dockerrun.aws.json
-        service: kuber-react-multi-cont
-        cluster: awseb-KuberReactMultiCont-env-qgxxvqtykr
-        wait-for-service-stability: true
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+        region: us-east-2
+        application_name: kuber-react-multi-cont
+        environment_name: KuberReactMultiCont-env
+        version_label: 12345
+#        deployment_package: deploy.zip
+
+#    - name: Deploy Amazon ECS task definition
+#      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#      with:
+##        task-definition: ${{ steps.task-def.outputs.task-definition }}
+#        task-definition: Dockerrun.aws.json
+#        service: kuber-react-multi-cont
+#        cluster: KuberReactMultiCont-env
+##        cluster: awseb-KuberReactMultiCont-env-qgxxvqtykr
+##        wait-for-service-stability: true
 
 #    - name: deploy to Elastic Beanstalk
 #      run:
