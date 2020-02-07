@@ -1,0 +1,40 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "devprodigy/client",
+      "hostname": "client",
+      "essential": false,
+      "memory": 156
+    },
+    {
+      "name": "server",
+      "image": "devprodigy/server",
+      "hostname": "api",
+      "essential": false,
+      "memory": 156
+    },
+    {
+      "name": "worker",
+      "image": "devprodigy/worker",
+      "hostname": "worker",
+      "essential": false,
+      "memory": 156
+    },
+    {
+      "name": "nginx",
+      "image": "devprodigy/nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "server"],
+      "memory": 156
+    }
+  ]
+}
