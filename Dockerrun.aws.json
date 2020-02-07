@@ -6,21 +6,21 @@
       "image": "devprodigy/client",
       "hostname": "client",
       "essential": false,
-      "memory": 512
+      "memory": 156
     },
     {
       "name": "server",
       "image": "devprodigy/server",
       "hostname": "api",
       "essential": false,
-      "memory": 512
+      "memory": 156
     },
     {
       "name": "worker",
       "image": "devprodigy/worker",
       "hostname": "worker",
       "essential": false,
-      "memory": 512
+      "memory": 156
     },
     {
       "name": "nginx",
@@ -34,7 +34,7 @@
         }
       ],
       "links": ["client", "server"],
-      "memory": 512
+      "memory": 156
     }
   ]
 }
