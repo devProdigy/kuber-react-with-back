@@ -1,18 +1,12 @@
-name: MasterDeployCI
+name: main_build_and_deploy_flow
 on:
-#  on:
-#    pull_request:
-#      branches:
-#        - master
-#    push:
-#      branches:
-#        - master
   push:
     branches:
-      - feature
       - master
-#env:
-#  DOCKER_CLI_EXPERIMENTAL: enabled
+#  pull_request:
+#    branches:
+#      - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
