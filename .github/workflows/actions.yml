@@ -86,6 +86,14 @@ jobs:
 #        task-definition: Dockerrun.aws.json
 #        container-name: kuber-react-multi-cont
 #        image: ${{ steps.build-image.outputs.image }}
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v2
+      with:
+        token: ${{secrets.github_token}}
+    - name: Print new build number
+      run: echo "Build number is $BUILD_NUMBER"
+
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v5
       with:
@@ -94,7 +102,7 @@ jobs:
         region: us-east-2
         application_name: kuber-react-multi-cont
         environment_name: KuberReactMultiCont-env
-        version_label: 4
+        version_label: $BUILD_NUMBER
         deployment_package: Dockerrun.aws.json
         use_existing_version_if_available: false
 
