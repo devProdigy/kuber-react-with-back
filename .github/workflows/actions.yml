@@ -76,19 +76,19 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: Dockerrun.aws.json
-#          container-name: kuber-react-multi-cont
-#          image: ${{ steps.build-image.outputs.image }}
+#    - name: Fill in the new image ID in the Amazon ECS task definition
+#      id: task-def
+#      uses: aws-actions/amazon-ecs-render-task-definition@v1
+#      with:
+#        task-definition: Dockerrun.aws.json
+#        container-name: kuber-react-multi-cont
+#        image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
-#        task-definition: Dockerrun.aws.json
+#        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        task-definition: Dockerrun.aws.json
         service: kuber-react-multi-cont
         cluster: default
         wait-for-service-stability: true
